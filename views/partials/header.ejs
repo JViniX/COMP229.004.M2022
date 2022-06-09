@@ -7,11 +7,10 @@
   <title><%= title %></title>
   <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
   <link rel='stylesheet' href='/@fortawesome/fontawesome-free/css/all.min.css' />
-  <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
   <!-- Main Nav bar  -->  
-  <nav class="navbar fixed-top navbar-expand-sm bg-dark navbar-dark">
+  <nav class="navbar navbar-expand bg-dark navbar-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <img src="/images/logo.JPG" alt="logo" style="width:40px;">
@@ -49,7 +48,17 @@
                   <i class="fas fa-home"></i> About </a>
               </a>
             </li>            
-            
+            <li class="nav-item dropdown">
+              <% if (title == "Inventory List" || title == "Add a new Item") { %>
+                <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Inventory</a>
+              <% } else { %>
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Inventory</a>
+              <% } %>       
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/inventory/list">Inventory List</a></li>
+                <li><a class="dropdown-item" href="/inventory/add">Add a new Item</a></li>
+              </ul>
+            </li>
             <li class="nav-item">
               <% if (title == "Users") { %>
                   <a class="nav-link active" href="/users">
@@ -57,12 +66,9 @@
                   <a class="nav-link" href="/users">
               <% } %>            
                   <i class="fas fa-user"></i> Users </a>
-              </a>            
-            
+              </a>
+            </li> 
           </ul>
         </div>
       </div>
     </nav>
-    <br>
-    <br>
-    <br>
