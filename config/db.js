@@ -1,12 +1,12 @@
 // Do not expose your credentials in the code for Production Environment.
-let atlasDB = "mongodb+srv://appuser:xhFYadTL1HYRH1tU@cluster004m2022.aydiv.mongodb.net/inventory?retryWrites=true&w=majority";
+let URI = require('./config').ATLASDB;
 
 // Database setup
 let mongoose = require('mongoose');
 
 module.exports = function(){
 
-    mongoose.connect(atlasDB);
+    mongoose.connect(URI);
     let mongoDb = mongoose.connection;
 
     mongoDb.on('error', console.error.bind(console, 'Connection Error:'));
