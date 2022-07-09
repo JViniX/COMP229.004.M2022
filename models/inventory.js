@@ -11,6 +11,11 @@ let inventoryModel = mongoose.Schema(
             h: Number,
             w: Number,
             uom: String
+        },
+        // Adds relationship with User model
+        owner: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
         }
     },
     {

@@ -1,6 +1,5 @@
 let mongoose = require('mongoose');
 let crypto = require('crypto');
-let Schema = mongoose.Schema;
 
 let UserSchema = mongoose.Schema(
     {
@@ -34,7 +33,8 @@ let UserSchema = mongoose.Schema(
         created: {
             type: Date,
             default: Date.now
-        }
+        },
+        admin: Boolean
     },
     {
         collection: "user"

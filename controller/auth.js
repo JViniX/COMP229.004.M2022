@@ -31,9 +31,51 @@ exports.requireAuth = function(req, res, next)
             message: info.message
           }
         );
-        // if (!user) throw new AuthError('401', 'User is not authenticated.');
-        // console.log(user);
-        req.user = user;
+        req.payload = user;
         next();
       })(req, res, next);
+}
+
+exports.isOwner = async function (req, res, next){
+
+    try {
+    
+        let id = req.params.id;
+        let inventoryItem = await Inventory.findById(id).populate('owner');
+        
+        console.log(inventoryItem);
+        if(inventoryItem == null) // Item not found
+        {
+            throw new Error('Item not found'); // Express catches the error.
+        }
+        else if(inventoryItem.owner != null){ // Item has a owner
+
+            if(inventoryItem.owner._id != req.payload.id){
+
+                let currentUser = await UserModel.findOne({_id: req.payload.id}, 'admin');
+
+                if(currentUser.admin != true){ // User is not a admin
+                    console.log('====> Not authorized');
+                    return res.status(403).json(
+                        { 
+                            success: false, 
+                            message: 'User is not authorized to modify this item.'
+                        }
+                    );
+                }
+            }
+        }
+    
+        next();
+    
+    } catch (error) {
+    console.log(error);
+    return res.status(400).json(
+        { 
+            success: false, 
+            message: getErrorMessage(error)
+        }
+    );
+    }
+
 }
